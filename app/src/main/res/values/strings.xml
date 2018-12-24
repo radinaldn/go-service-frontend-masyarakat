@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Go Service Masyarakat</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="msg">Mohon terima semua permission</string>
+    <string name="title_activity_orderanku">OrderankuActivity</string>
+    <string name="title_activity_profil">ProfilActivity</string>
+    <string name="title_activity_saldo">SaldoActivity</string>
+</resources>
