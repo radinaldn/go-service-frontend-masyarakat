@@ -1,5 +1,6 @@
 package id.topapp.radinaldn.goservicemasyarakat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +27,18 @@ public class SaldoActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void goToProfilActivity(){
+        Intent intent = new Intent(SaldoActivity.this, ProfilActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        goToProfilActivity();
     }
 
 }

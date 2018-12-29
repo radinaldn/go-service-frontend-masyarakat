@@ -1,9 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="id.topapp.radinaldn.goservicemasyarakat.activity.PemesananActivity">
+    tools:context=".activity.PemesananActivity"
+    android:orientation="vertical"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_dimana_saya"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        />
+
+    <ImageView
+        android:id="@+id/ivHideMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/map"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_keyboard_arrow_up" />
+
+    <ScrollView
+        android:layout_below="@+id/ivHideMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                style="@style/TextContent.Subtitle"
+                android:text="Detail Pemesanan"
+                android:layout_marginBottom="8dp"/>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        style="@style/TextSpec.Field"
+                        android:text="Kategori"/>
+                    <TextView
+                        android:id="@+id/tvKategori"
+                        style="@style/TextSpec.Value"
+                        android:text="Kategori layanan tidak terbaca..."/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        style="@style/TextSpec.Field"
+                        android:text="Keluhan"/>
+                    <EditText
+                        android:id="@+id/etKeluhan"
+                        style="@style/TextSpec.Value"
+                        android:inputType="textMultiLine"
+                        android:hint="Sebutkan keluhan alat elektronik"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        style="@style/TextSpec.Field"
+                        android:text="Kategori\nBayar"/>
+
+                        <RadioGroup
+                            android:id="@+id/rgKategoriBayar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbSaldo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:text="Saldo" />
+
+                            <RadioButton
+                                android:id="@+id/rbCash"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cash"/>
+
+                        </RadioGroup>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        style="@style/TextSpec.Field"
+                        android:text="Alamat"/>
+                    <EditText
+                        android:layout_width="10dp"
+                        android:id="@+id/etAlamat"
+                        style="@style/TextSpec.Value"
+                        android:inputType="textMultiLine"
+                        android:hint="Isi alamat anda"/>
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/ivGPS"
+                        app:srcCompat="@drawable/ic_gps_fixed_black"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        style="@style/TextSpec.Field"
+                        android:text="Lat &amp; Lng"/>
+                    <TextView
+                        android:id="@+id/tvLatLng"
+                        style="@style/TextSpec.Value"
+                        android:inputType="textMultiLine"
+                        android:text="Membaca lokasi..."/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        style="@style/TextSpec.Field"
+                        android:text="Foto"/>
+                    <ImageView
+                        android:layout_gravity="left"
+                        app:srcCompat="@drawable/ic_add_photo"
+                        android:id="@+id/btKamera"
+                        android:text="Ambil Gambar"
+                        android:visibility="visible"
+                       />
+
+                    <ImageView
+                        android:id="@+id/ivFoto"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/logo_app"
+                        android:visibility="gone" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                style="@style/TextContent.Subtitle"
+                android:text="Calon Teknisi"
+                android:layout_marginBottom="8dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/dummy_ava"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/civFotoTeknisi"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/tvDeskripsiTeknisi"
+                    style="@style/TextContent"
+                    android:layout_toRightOf="@id/civFotoTeknisi"
+                    android:text="Klik teknisi dari Maps\nKemudian pilih teknisi..."
+                    android:layout_centerVertical="true"/>
+
+
+            </RelativeLayout>
+            <Button
+                android:id="@+id/btKirim"
+                android:drawablePadding="5dp"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/colorPrimaryDark"
+                android:text="Kirim Pesanan"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</RelativeLayout>

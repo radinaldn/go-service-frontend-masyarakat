@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import id.topapp.radinaldn.goservicemasyarakat.R;
@@ -13,6 +14,13 @@ import id.topapp.radinaldn.goservicemasyarakat.R;
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private static final String TAG_JENIS_SERVIS = "jenis_servis";
+
+    // init TAG servis
+    private static final String TAG_TV = "tv";
+    private static final String TAG_KULKAS = "kulkas";
+    private static final String TAG_AC = "ac";
+    private static final String TAG_MESIN_CUCI = "mesin cuci";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,4 +64,27 @@ public class MainActivity extends AppCompatActivity {
         navigation.setSelectedItemId(R.id.navigation_dashboard);
     }
 
+    public void actionTelevisi(View view) {
+        Intent i = new Intent(MainActivity.this, PemesananActivity.class);
+        i.putExtra(TAG_JENIS_SERVIS, TAG_TV);
+        startActivity(i);
+    }
+
+    public void actionKulkas(View view) {
+        Intent i = new Intent(MainActivity.this, PemesananActivity.class);
+        i.putExtra(TAG_JENIS_SERVIS, TAG_KULKAS);
+        startActivity(i);
+    }
+
+    public void actionAC(View view) {
+        Intent i = new Intent(MainActivity.this, PemesananActivity.class);
+        i.putExtra(TAG_JENIS_SERVIS, TAG_AC);
+        startActivity(i);
+    }
+
+    public void actionMesinCuci(View view) {
+        Intent i = new Intent(MainActivity.this, PemesananActivity.class);
+        i.putExtra(TAG_JENIS_SERVIS, TAG_MESIN_CUCI);
+        startActivity(i);
+    }
 }

@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="id.topapp.radinaldn.goservicemasyarakat.activity.SaldoActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.25"
+        android:background="@drawable/logo_app"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="239dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

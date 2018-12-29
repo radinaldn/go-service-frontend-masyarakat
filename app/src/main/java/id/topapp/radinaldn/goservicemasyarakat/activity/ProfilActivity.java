@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -98,6 +99,13 @@ public class ProfilActivity extends AppCompatActivity {
         Log.d("TAG", "saldo: "+saldoFormatted);
 
         tvSaldo.setText("Saldo Anda:\n"+saldoFormatted);
+        tvSaldo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProfilActivity.this, SaldoActivity.class);
+                startActivity(i);
+            }
+        });
         Log.d("TAG", "tvSaldo: "+sessionManager.getMasyarakatDetail().get("Saldo Anda:\n"+saldoFormatted));
 
         Log.d("TAG", "foto: "+ServerConfig.MASYARAKAT_PROFIL_PATH+sessionManager.getMasyarakatDetail().get(SessionManager.FOTO));
@@ -107,6 +115,18 @@ public class ProfilActivity extends AppCompatActivity {
                 .centerCrop()
                 .fit()
                 .into(ivFoto);
+    }
+
+    private void goToMainActivity(){
+        Intent intent = new Intent(ProfilActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        goToMainActivity();
     }
 
 }

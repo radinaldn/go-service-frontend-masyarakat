@@ -8,4 +8,14 @@
     tools:context="id.topapp.radinaldn.goservicemasyarakat.activity.SaldoActivity"
     tools:showIn="@layout/activity_saldo">
 
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Saldo Anda Kosong\nKlik tombol add dibawah untuk mengupload bukti Topup"
+        android:textSize="10pt"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="214dp" />
 </android.support.constraint.ConstraintLayout>

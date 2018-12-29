@@ -221,7 +221,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/username"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="NIK"
@@ -236,7 +236,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvNik"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Jay patel"
@@ -268,7 +268,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/password"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Nama"
@@ -282,7 +282,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvNama"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -310,7 +310,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/ttl"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="TTL"
@@ -324,7 +324,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvTtl"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -352,7 +352,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/jk"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Jenis Kelamin"
@@ -366,7 +366,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvJk"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -394,7 +394,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/alamat"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Alamat"
@@ -408,7 +408,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvAlamat"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -436,7 +436,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/agama"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Agama"
@@ -450,7 +450,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvAgama"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -478,7 +478,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/status_kawin"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Status Kawin"
@@ -492,7 +492,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvStatusKawin"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -520,7 +520,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/pekerjaan"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Pekerjaan"
@@ -534,7 +534,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvPekerjaan"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -562,7 +562,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/kewarganegaraan"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Kewarganegaraan"
@@ -576,7 +576,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvKewarganegaraan"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"
@@ -604,7 +604,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/no_hp"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="No HP"
@@ -618,7 +618,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:id="@+id/tvNoHp"
-                        android:textSize="16dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#1b193b"

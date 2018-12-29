@@ -4,15 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import id.topapp.radinaldn.goservicemasyarakat.R;
+import id.topapp.radinaldn.goservicemasyarakat.adapter.OrderankuViewPagerAdapter;
+import id.topapp.radinaldn.goservicemasyarakat.fragment.OrderankuFragment;
+import id.topapp.radinaldn.goservicemasyarakat.rest.ApiClient;
+import id.topapp.radinaldn.goservicemasyarakat.rest.ApiInterface;
 
 public class OrderankuActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    ApiInterface apiService;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,6 +66,41 @@ public class OrderankuActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_orderanku);
+
+        apiService = ApiClient.getClient().create(ApiInterface.class);
+
+//        Toolbar toolbar = findViewById(R.id.toolbar_kehadiran_dosen);
+//        setSupportActionBar(toolbar);
+//
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                goToMainActivity();
+//            }
+//        });
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        viewPager = findViewById(R.id.viewpager_kehadiran_dosen);
+        tabLayout = findViewById(R.id.tabs_kehadiran_dosen);
+
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        OrderankuViewPagerAdapter adapter = new OrderankuViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(OrderankuFragment.newInstance("Diproses"), "Diproses");
+        adapter.addFragment(OrderankuFragment.newInstance("Selesai"), "Selesai");
+        adapter.addFragment(OrderankuFragment.newInstance("Dibayar"), "Dibayar");
+        viewPager.setAdapter(adapter);
+    }
+
+    private void goToMainActivity(){
+        Intent intent = new Intent(OrderankuActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
     }
 
 }

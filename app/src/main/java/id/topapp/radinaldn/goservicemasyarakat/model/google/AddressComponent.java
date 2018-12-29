@@ -1,4 +1,4 @@
-package id.topapp.radinaldn.smartpolicepelapor.models.google;
+package id.topapp.radinaldn.goservicemasyarakat.model.google;
 
 /**
  * Created by radinaldn on 10/08/18.

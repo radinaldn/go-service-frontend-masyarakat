@@ -42,7 +42,7 @@ public class LoginActivity extends AbsRuntimePermission {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.RECORD_AUDIO},
+                        Manifest.permission.CALL_PHONE},
                 R.string.msg,REQUEST_PERMISSION);
 
         sessionManager = new SessionManager(this);
