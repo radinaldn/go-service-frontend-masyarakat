@@ -35,7 +35,7 @@ import retrofit2.Response;
 public class OrderankuFragment extends Fragment {
     private RecyclerView recyclerView;
     private OrderankuAdapter adapter;
-    private ArrayList<Pemesanan> pemesananArrayList;
+    private ArrayList<Pemesanan> pemesananArrayList = new ArrayList<>();
     private static final String ARG_STATUS= "proses";
 
     ApiInterface apiService;
@@ -97,7 +97,8 @@ public class OrderankuFragment extends Fragment {
         return view;
     }
 
-    private void getOrderanku(final String proses) {
+    public void getOrderanku(final String proses) {
+        pemesananArrayList.clear();
         Call<ResponseViewPemesanan> call = apiService.pemesananViewAllByNikAndProses(MY_NIK, proses);
 
         call.enqueue(new Callback<ResponseViewPemesanan>() {
@@ -107,11 +108,10 @@ public class OrderankuFragment extends Fragment {
                     Log.d(TAG, "onResponse: "+response.toString());
                     Log.d(TAG, "onResponse: "+response.body().toString());
                     if(response.body().getPemesanans().size()>0){
-                        pemesananArrayList = new ArrayList<>();
 
                         pemesananArrayList.addAll(response.body().getPemesanans());
 
-                        adapter = new OrderankuAdapter(getContext(), pemesananArrayList);
+                        adapter = new OrderankuAdapter(getContext(), pemesananArrayList, OrderankuFragment.this, proses);
 
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                         recyclerView.setLayoutManager(layoutManager);
@@ -121,7 +121,7 @@ public class OrderankuFragment extends Fragment {
                         Toast.makeText(getContext(), "Data orderan by nik : "+MY_NIK+" dan proses : "+proses+" kosong.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "onResponse error: " +response.errorBody(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "onResponse error: " +response.toString(), Toast.LENGTH_LONG).show();
                 }
             }
 

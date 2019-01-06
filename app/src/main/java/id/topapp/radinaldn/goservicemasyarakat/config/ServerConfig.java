@@ -15,4 +15,7 @@ public class ServerConfig {
     public static final String MASYARAKAT_PROFIL_PATH = DOMAIN_SERVER+"karir-ta-orang/udin-smart-service/web/files/profil-masyarakat/";
     public static final String TEKNISI_PROFIL_PATH = DOMAIN_SERVER+"karir-ta-orang/udin-smart-service/web/files/profil-teknisi/";
     public static final String UPLOAD_FOTO_ENDPOINT = DOMAIN_SERVER+"karir-ta-orang/udin-smart-service/api/upload/upload-foto.php";
+    public static final String UPLOAD_FOTO_TOPUP_ENDPOINT = DOMAIN_SERVER+"karir-ta-orang/udin-smart-service/api/upload/upload-foto-topup.php";
+    public static final String BUKTI_TOPUP_PATH = FILES_PATH+"topup/";
+    public static final String PUSHNOTIF_INSTANCE_ID = "825913f1-e596-46cd-a0b8-22d2b6535c3d";
 }

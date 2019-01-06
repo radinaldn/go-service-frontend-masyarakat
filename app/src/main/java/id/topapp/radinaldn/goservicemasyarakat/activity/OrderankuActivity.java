@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class OrderankuActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     ApiInterface apiService;
+    View parentLayout;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -61,6 +63,8 @@ public class OrderankuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderanku);
+
+        parentLayout = findViewById(android.R.id.content);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -101,6 +105,16 @@ public class OrderankuActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
         finish();
+    }
+
+    public void showSnackbarSaldo(){
+        Snackbar.make(parentLayout, "Saldo anda tidak mencukupi!", Snackbar.LENGTH_LONG).setAction("Isi Saldo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(OrderankuActivity.this, SaldoActivity.class);
+                startActivity(i);
+            }
+        }).show();
     }
 
 }

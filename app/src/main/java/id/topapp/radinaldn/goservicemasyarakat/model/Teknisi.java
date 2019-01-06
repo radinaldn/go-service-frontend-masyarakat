@@ -48,6 +48,12 @@ public class Teknisi {
     @SerializedName("jarak")
     @Expose
     private String jarak;
+    @SerializedName("total_rating")
+    @Expose
+    private int totalRating;
+    @SerializedName("jumlah_pemesanan")
+    @Expose
+    private int jumlahPemesanan;
 
     public String getIdTeknisi() {
         return idTeknisi;
@@ -153,4 +159,19 @@ public class Teknisi {
         this.jarak = jarak;
     }
 
+    public int getTotalRating() {
+        return totalRating;
+    }
+
+    public void setTotalRating(int totalRating) {
+        this.totalRating = totalRating;
+    }
+
+    public int getJumlahPemesanan() {
+        return jumlahPemesanan;
+    }
+
+    public void setJumlahPemesanan(int jumlahPemesanan) {
+        this.jumlahPemesanan = jumlahPemesanan;
+    }
 }

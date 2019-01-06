@@ -1,9 +1,12 @@
 package id.topapp.radinaldn.goservicemasyarakat.adapter;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,11 +24,19 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import id.topapp.radinaldn.goservicemasyarakat.R;
+import id.topapp.radinaldn.goservicemasyarakat.activity.DetailPemesananActivity;
+import id.topapp.radinaldn.goservicemasyarakat.activity.OrderankuActivity;
 import id.topapp.radinaldn.goservicemasyarakat.config.ServerConfig;
+import id.topapp.radinaldn.goservicemasyarakat.fragment.OrderankuFragment;
 import id.topapp.radinaldn.goservicemasyarakat.model.Pemesanan;
+import id.topapp.radinaldn.goservicemasyarakat.response.ResponseBayarDenganSaldo;
 import id.topapp.radinaldn.goservicemasyarakat.rest.ApiClient;
 import id.topapp.radinaldn.goservicemasyarakat.rest.ApiInterface;
 import id.topapp.radinaldn.goservicemasyarakat.util.SessionManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * Created by radinaldn on 29/12/18.
@@ -33,16 +44,23 @@ import id.topapp.radinaldn.goservicemasyarakat.util.SessionManager;
 
 public class OrderankuAdapter extends RecyclerView.Adapter<OrderankuAdapter.OrderankuViewHolder> {
 
+    private static final String TAG_ID_PEMESANAN = "id_pemesanan";
     private Context context;
 
     private ArrayList<Pemesanan> dataList;
     private static final String TAG = OrderankuAdapter.class.getSimpleName();
 
     ApiInterface apiService;
+    SessionManager sessionManager;
+    private static String NIK;
+    private OrderankuFragment fragment;
+    private String proses;
 
-    public OrderankuAdapter(Context context, ArrayList<Pemesanan> dataList) {
+    public OrderankuAdapter(Context context, ArrayList<Pemesanan> dataList, OrderankuFragment fragment, String proses) {
         this.context = context;
         this.dataList = dataList;
+        this.fragment = fragment;
+        this.proses = proses;
     }
 
     @NonNull
@@ -52,6 +70,8 @@ public class OrderankuAdapter extends RecyclerView.Adapter<OrderankuAdapter.Orde
         final View view = layoutInflater.inflate(R.layout.orderanku_item, parent, false);
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
+        sessionManager = new SessionManager(context);
+        NIK = sessionManager.getMasyarakatDetail().get(SessionManager.NIK);
 
         return new OrderankuViewHolder(view);
     }
@@ -65,6 +85,7 @@ public class OrderankuAdapter extends RecyclerView.Adapter<OrderankuAdapter.Orde
         NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
         String biayaInRP = formatRupiah.format(Double.parseDouble(dataList.get(position).getBiaya()));
 
+        holder.tv_id_pemesanan.setText(dataList.get(position).getIdPemesanan());
 
         switch (dataList.get(position).getProses()){
             case "Diproses":
@@ -147,7 +168,7 @@ public class OrderankuAdapter extends RecyclerView.Adapter<OrderankuAdapter.Orde
                     holder.bt_bayar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(context, "Anda menekan tombol bayar", Toast.LENGTH_SHORT).show();
+                            actionBayarSaldo(NIK, dataList.get(position).getIdPemesanan());
                             // Aksi kilk bayar saldo disini
                         }
                     });
@@ -170,6 +191,41 @@ public class OrderankuAdapter extends RecyclerView.Adapter<OrderankuAdapter.Orde
         });
     }
 
+    private void actionBayarSaldo(String nik, String idPemesanan) {
+        apiService.pemesananBayarDenganSaldo(nik, idPemesanan).enqueue(new Callback<ResponseBayarDenganSaldo>() {
+            @Override
+            public void onResponse(Call<ResponseBayarDenganSaldo> call, Response<ResponseBayarDenganSaldo> response) {
+                Log.d(TAG, "onResponse: "+response.toString());
+                if (response.isSuccessful()){
+
+                    Log.d(TAG, "onResponse: "+response.body().toString());
+                    if (response.body().getCode() == 200){
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                        // fungsi ini belum jalan
+                        Intent i = new Intent(context, DetailPemesananActivity.class);
+                        i.putExtra(TAG_ID_PEMESANAN, response.body().getPemesanan().getIdPemesanan());
+                        context.startActivity(i);
+
+                    } else if (response.body().getMessage().equalsIgnoreCase("Saldo anda tidak mencukupi!")) {
+                        if(context instanceof OrderankuActivity){
+                            ((OrderankuActivity)context).showSnackbarSaldo();
+                        }
+                    } else {
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.d(TAG, "onResponse: response unsecessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBayarDenganSaldo> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
         return (dataList != null) ? dataList.size() : 0;
@@ -177,12 +233,13 @@ public class OrderankuAdapter extends RecyclerView.Adapter<OrderankuAdapter.Orde
 
     public class OrderankuViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_nama_toko, tv_keluhan, tv_kategori_bayar, tv_created_at;
+        TextView tv_id_pemesanan, tv_nama_toko, tv_keluhan, tv_kategori_bayar, tv_created_at;
         ImageView iv_foto, iv_kategori, iv_call;
         Button bt_bayar;
 
-        public OrderankuViewHolder(View itemView) {
+        public OrderankuViewHolder(final View itemView) {
             super(itemView);
+            tv_id_pemesanan = itemView.findViewById(R.id.tv_id_pemesanan);
             tv_nama_toko = itemView.findViewById(R.id.tv_nama_toko);
             tv_keluhan = itemView.findViewById(R.id.tv_keluhan);
             tv_created_at = itemView.findViewById(R.id.tv_created_at);
@@ -190,7 +247,20 @@ public class OrderankuAdapter extends RecyclerView.Adapter<OrderankuAdapter.Orde
             iv_kategori = itemView.findViewById(R.id.iv_kategori);
             tv_kategori_bayar = itemView.findViewById(R.id.tv_kategori_bayar);
             iv_call = itemView.findViewById(R.id.iv_call);
-            bt_bayar = itemView.findViewById(R.id.bt_bayar);
+            bt_bayar = itemView.findViewById(R.id.btBayar);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(itemView.getContext(), DetailPemesananActivity.class);
+                    i.putExtra(TAG_ID_PEMESANAN, tv_id_pemesanan.getText());
+
+                    // Aktifkan untuk mode debugging
+                    //Toast.makeText(itemView.getContext(), "ID_MENGAJAR : "+tv_idmengajar.getText(), Toast.LENGTH_SHORT).show();
+
+                    itemView.getContext().startActivity(i);
+                }
+            });
 
         }
     }

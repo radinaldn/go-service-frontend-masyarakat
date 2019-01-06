@@ -1,15 +1,13 @@
 package id.topapp.radinaldn.goservicemasyarakat.response;
 
 /**
- * Created by radinaldn on 06/01/19.
+ * Created by radinaldn on 31/12/18.
  */
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import id.topapp.radinaldn.goservicemasyarakat.model.PemesananUnrated;
-
-public class ResponseAddPemesananRating {
+public class ResponseViewSaldo {
 
     @SerializedName("code")
     @Expose
@@ -17,9 +15,9 @@ public class ResponseAddPemesananRating {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("data")
+    @SerializedName("saldo")
     @Expose
-    private PemesananUnrated data;
+    private Integer saldo;
 
     public Integer getCode() {
         return code;
@@ -37,12 +35,12 @@ public class ResponseAddPemesananRating {
         this.message = message;
     }
 
-    public PemesananUnrated getData() {
-        return data;
+    public Integer getSaldo() {
+        return saldo;
     }
 
-    public void setData(PemesananUnrated data) {
-        this.data = data;
+    public void setSaldo(Integer saldo) {
+        this.saldo = saldo;
     }
 
 }

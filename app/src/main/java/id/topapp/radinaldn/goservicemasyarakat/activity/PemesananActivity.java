@@ -74,6 +74,7 @@ import retrofit2.Response;
 public class PemesananActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 
+    private static final String TAG_ID_PEMESANAN = "id_pemesanan";
     TextView tvKategori, tvLatLng, tvDeskripsiTeknisi;
     EditText etKeluhan, etAlamat;
     RadioGroup rgKategoriBayar;
@@ -247,7 +248,10 @@ public class PemesananActivity extends AppCompatActivity implements OnMapReadyCa
             public void onResponse(Call<ResponsePemesanan> call, Response<ResponsePemesanan> response) {
                 if (response.isSuccessful()){
                     if (response.body().getCode() == 200){
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.kirim_pesanan_berhasil)+"\nID Pemesanan : "+response.body().getPemesanan().get(0).getIdPemesanan(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), getResources().getString(R.string.kirim_pesanan_berhasil)+"\nID Pemesanan : "+response.body().getPemesanan().get(0).getIdPemesanan(), Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(PemesananActivity.this, DetailPemesananActivity.class);
+                        i.putExtra(TAG_ID_PEMESANAN, response.body().getPemesanan().get(0).getIdPemesanan());
+                        startActivity(i);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.kirim_pesanan_gagal), Toast.LENGTH_SHORT).show();
@@ -324,13 +328,44 @@ public class PemesananActivity extends AppCompatActivity implements OnMapReadyCa
                                 final String alamat = teknisis.get(i).getAlamat();
                                 final String no_hp = teknisis.get(i).getNoHp();
                                 final String foto = teknisis.get(i).getFoto();
+                                System.out.println("total rating = "+teknisis.get(i).getTotalRating());
+                                System.out.println("jumlah pemesanan = "+teknisis.get(i).getJumlahPemesanan());
+                                double dblRating = Math.round((double)(teknisis.get(i).getTotalRating())/(double)teknisis.get(i).getJumlahPemesanan());
+                                int rating = (int) dblRating;
 
 
+                                Log.d(TAG, "rating "+nama_toko+" : "+rating);
 
                                 Log.d(TAG, "addTeknisiMarker: menambahkan marker "+nama_toko);
 
-                                teknisiMarker = mMap.addMarker(new
-                                        MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker)));
+                                switch (rating){
+                                    case 1:
+                                        teknisiMarker = mMap.addMarker(new
+                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_1)));
+                                        break;
+                                    case 2:
+                                        teknisiMarker = mMap.addMarker(new
+                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_2)));
+                                        break;
+                                    case 3:
+                                        teknisiMarker = mMap.addMarker(new
+                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_3)));
+                                        break;
+                                    case 4:
+                                        teknisiMarker = mMap.addMarker(new
+                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_4)));
+                                        break;
+                                    case 5 :
+                                        teknisiMarker = mMap.addMarker(new
+                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_5)));
+                                        break;
+                                        default:
+                                            teknisiMarker = mMap.addMarker(new
+                                                    MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker)));
+                                            break;
+                                }
+
+
 
 
                                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {

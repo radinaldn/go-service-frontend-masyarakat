@@ -125,7 +125,7 @@
                             android:id="@+id/tvSaldo"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="Saldo Anda :\nRp. 540.000,-"
+                            android:text="Sedang membaca ..."
 
                             android:paddingLeft="2dp"
                             android:gravity="center_vertical"
@@ -226,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:text="NIK"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -242,7 +242,7 @@
                         android:hint="Jay patel"
                         android:textColorHint="#181737"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -273,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:text="Nama"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -288,7 +288,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="Radinal Dwiki N"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -315,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:text="TTL"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -330,7 +330,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="Rengat, 29-11-1996"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -357,7 +357,7 @@
                         android:layout_height="wrap_content"
                         android:text="Jenis Kelamin"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -372,7 +372,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="Laki-Laki"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -399,7 +399,7 @@
                         android:layout_height="wrap_content"
                         android:text="Alamat"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -414,7 +414,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="Jl. HR Subrantas"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -441,7 +441,7 @@
                         android:layout_height="wrap_content"
                         android:text="Agama"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -456,7 +456,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="Islam"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -483,7 +483,7 @@
                         android:layout_height="wrap_content"
                         android:text="Status Kawin"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -498,7 +498,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="Belum Kawin"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -525,7 +525,7 @@
                         android:layout_height="wrap_content"
                         android:text="Pekerjaan"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -540,7 +540,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="Developer"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -567,7 +567,7 @@
                         android:layout_height="wrap_content"
                         android:text="Kewarganegaraan"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -582,7 +582,7 @@
                         android:textColorHint="#1b193b"
                         android:hint="WNI"
                         android:textColor="#181737"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
@@ -593,6 +593,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#dad8d8"/>
+
+                <Button
+                    android:onClick="actionLogout"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:text="Logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -609,7 +618,7 @@
                         android:layout_height="wrap_content"
                         android:text="No HP"
                         android:textColor="#a2a1b8"
-                        android:maxLength="12"
+
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="left"
@@ -624,12 +633,13 @@
                         android:textColorHint="#1b193b"
                         android:hint="081234567890"
                         android:textColor="#181737"
-                        android:maxLength="12"
+                        
                         android:background="#0000"
                         android:padding="16dp"
                         android:gravity="right"
                         />
                 </LinearLayout>
+
 
 
 
