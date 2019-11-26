@@ -206,6 +206,8 @@ public class PemesananActivity extends AppCompatActivity implements OnMapReadyCa
                 if (myLat!=null){
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(myLat,myLng)));
                     moveMarker(myLat, myLng);
+
+                    addTeknisiToMap();
                 }
             }
         });
@@ -303,126 +305,130 @@ public class PemesananActivity extends AppCompatActivity implements OnMapReadyCa
             moveMarker(myLat, myLng);
 
             // add teknisi's marker
-            apiService.teknisiFindNearby(myLat, myLng, 50).enqueue(new Callback<ResponseFindTeknisi>() {
-                @Override
-                public void onResponse(Call<ResponseFindTeknisi> call, Response<ResponseFindTeknisi> response) {
-                    if (response.isSuccessful()){
-                        if (response.body().getTeknisi().size() > 0){
-                            Toast.makeText(getApplicationContext(), "Ada "+response.body().getTeknisi().size()+" didekatmu.", Toast.LENGTH_SHORT).show();
-
-                            // add teknisi marker
-                            teknisis = new ArrayList<>();
-                            teknisis.addAll(response.body().getTeknisi());
-
-                            System.out.println("ada "+teknisis.size()+" teknisi");
-
-                            if (teknisiMarker!= null) teknisiMarker.remove();
-
-                            for (int i=0; i<teknisis.size(); i++){
-                                Log.d(TAG, "onResponse: perulangan teknisi ke-"+i);
-
-                                Double latitude = Double.parseDouble(teknisis.get(i).getLat());
-                                Double longitude= Double.parseDouble(teknisis.get(i).getLng());
-                                String id_teknisi = teknisis.get(i).getIdTeknisi();
-                                final String nama_toko = teknisis.get(i).getNamaToko();
-                                final String alamat = teknisis.get(i).getAlamat();
-                                final String no_hp = teknisis.get(i).getNoHp();
-                                final String foto = teknisis.get(i).getFoto();
-                                System.out.println("total rating = "+teknisis.get(i).getTotalRating());
-                                System.out.println("jumlah pemesanan = "+teknisis.get(i).getJumlahPemesanan());
-                                double dblRating = Math.round((double)(teknisis.get(i).getTotalRating())/(double)teknisis.get(i).getJumlahPemesanan());
-                                int rating = (int) dblRating;
-
-
-                                Log.d(TAG, "rating "+nama_toko+" : "+rating);
-
-                                Log.d(TAG, "addTeknisiMarker: menambahkan marker "+nama_toko);
-
-                                switch (rating){
-                                    case 1:
-                                        teknisiMarker = mMap.addMarker(new
-                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_1)));
-                                        break;
-                                    case 2:
-                                        teknisiMarker = mMap.addMarker(new
-                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_2)));
-                                        break;
-                                    case 3:
-                                        teknisiMarker = mMap.addMarker(new
-                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_3)));
-                                        break;
-                                    case 4:
-                                        teknisiMarker = mMap.addMarker(new
-                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_4)));
-                                        break;
-                                    case 5 :
-                                        teknisiMarker = mMap.addMarker(new
-                                                MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_5)));
-                                        break;
-                                        default:
-                                            teknisiMarker = mMap.addMarker(new
-                                                    MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker)));
-                                            break;
-                                }
-
-
-
-
-                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                                    @Override
-                                    public boolean onMarkerClick(final Marker marker) {
-
-                                        if (!marker.getTitle().equalsIgnoreCase("Posisi saya")){
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(PemesananActivity.this);
-                                            builder.setTitle(teknisis.get(Integer.valueOf(marker.getTitle())).getNamaToko());
-                                            builder.setMessage(teknisis.get(Integer.valueOf(marker.getTitle())).getAlamat()+"\n"+teknisis.get(Integer.valueOf(marker.getTitle())).getNoHp()+"\nAnda ingin memilih teknisi ini?");
-                                            builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Picasso.with(PemesananActivity.this).load(ServerConfig.TEKNISI_PROFIL_PATH+teknisis.get(Integer.valueOf(marker.getTitle())).getFoto()).centerCrop().fit().into(civFotoTeknisi);
-                                                    Log.d(TAG, "load foto : "+ServerConfig.TEKNISI_PROFIL_PATH+foto);
-                                                    tvDeskripsiTeknisi.setText(teknisis.get(Integer.valueOf(marker.getTitle())).getNamaToko()+"\n"+teknisis.get(Integer.valueOf(marker.getTitle())).getAlamat()+"\n"+teknisis.get(Integer.valueOf(marker.getTitle())).getNoHp());
-                                                    ID_TEKNISI = teknisis.get(Integer.valueOf(marker.getTitle())).getIdTeknisi();
-
-                                                }
-                                            });
-
-                                            builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                }
-                                            });
-
-                                            builder.create().show();
-                                        } else {
-                                            marker.showInfoWindow();
-                                        }
-
-
-                                        return true;
-                                    }
-
-
-                                });
-                            }
-
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Maaf, tidak ada teknisi didekat anda.\nTutup dan bukka lagi halaman ini.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseFindTeknisi> call, Throwable t) {
-
-                }
-            });
+            addTeknisiToMap();
         }
 
 
+    }
+
+    private void addTeknisiToMap() {
+        apiService.teknisiFindNearby(myLat, myLng, 1000).enqueue(new Callback<ResponseFindTeknisi>() {
+            @Override
+            public void onResponse(Call<ResponseFindTeknisi> call, Response<ResponseFindTeknisi> response) {
+                if (response.isSuccessful()){
+                    if (response.body().getTeknisi().size() > 0){
+                        Toast.makeText(getApplicationContext(), "Ada "+response.body().getTeknisi().size()+" didekatmu.", Toast.LENGTH_SHORT).show();
+
+                        // add teknisi marker
+                        teknisis = new ArrayList<>();
+                        teknisis.addAll(response.body().getTeknisi());
+
+                        System.out.println("ada "+teknisis.size()+" teknisi");
+
+                        if (teknisiMarker!= null) teknisiMarker.remove();
+
+                        for (int i=0; i<teknisis.size(); i++){
+                            Log.d(TAG, "onResponse: perulangan teknisi ke-"+i);
+
+                            Double latitude = Double.parseDouble(teknisis.get(i).getLat());
+                            Double longitude= Double.parseDouble(teknisis.get(i).getLng());
+                            String id_teknisi = teknisis.get(i).getIdTeknisi();
+                            final String nama_toko = teknisis.get(i).getNamaToko();
+                            final String alamat = teknisis.get(i).getAlamat();
+                            final String no_hp = teknisis.get(i).getNoHp();
+                            final String foto = teknisis.get(i).getFoto();
+                            System.out.println("total rating = "+teknisis.get(i).getTotalRating());
+                            System.out.println("jumlah pemesanan = "+teknisis.get(i).getJumlahPemesanan());
+                            double dblRating = Math.round((double)(teknisis.get(i).getTotalRating())/(double)teknisis.get(i).getJumlahPemesanan());
+                            int rating = (int) dblRating;
+
+
+                            Log.d(TAG, "rating "+nama_toko+" : "+rating);
+
+                            Log.d(TAG, "addTeknisiMarker: menambahkan marker "+nama_toko);
+
+                            switch (rating){
+                                case 1:
+                                    teknisiMarker = mMap.addMarker(new
+                                            MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_1)));
+                                    break;
+                                case 2:
+                                    teknisiMarker = mMap.addMarker(new
+                                            MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_2)));
+                                    break;
+                                case 3:
+                                    teknisiMarker = mMap.addMarker(new
+                                            MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_3)));
+                                    break;
+                                case 4:
+                                    teknisiMarker = mMap.addMarker(new
+                                            MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_4)));
+                                    break;
+                                case 5 :
+                                    teknisiMarker = mMap.addMarker(new
+                                            MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker_5)));
+                                    break;
+                                default:
+                                    teknisiMarker = mMap.addMarker(new
+                                            MarkerOptions().position(new LatLng(latitude, longitude)).title(Integer.toString(i)).snippet(nama_toko+"\n"+alamat+"\n"+no_hp).icon(bitmapDescriptorFromVector(PemesananActivity.this, R.drawable.teknisi_marker)));
+                                    break;
+                            }
+
+
+
+
+                            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                @Override
+                                public boolean onMarkerClick(final Marker marker) {
+
+                                    if (!marker.getTitle().equalsIgnoreCase("Posisi saya")){
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(PemesananActivity.this);
+                                        builder.setTitle(teknisis.get(Integer.valueOf(marker.getTitle())).getNamaToko());
+                                        builder.setMessage(teknisis.get(Integer.valueOf(marker.getTitle())).getAlamat()+"\n"+teknisis.get(Integer.valueOf(marker.getTitle())).getNoHp()+"\nAnda ingin memilih teknisi ini?");
+                                        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Picasso.with(PemesananActivity.this).load(ServerConfig.TEKNISI_PROFIL_PATH+teknisis.get(Integer.valueOf(marker.getTitle())).getFoto()).centerCrop().fit().into(civFotoTeknisi);
+                                                Log.d(TAG, "load foto : "+ServerConfig.TEKNISI_PROFIL_PATH+foto);
+                                                tvDeskripsiTeknisi.setText(teknisis.get(Integer.valueOf(marker.getTitle())).getNamaToko()+"\n"+teknisis.get(Integer.valueOf(marker.getTitle())).getAlamat()+"\n"+teknisis.get(Integer.valueOf(marker.getTitle())).getNoHp());
+                                                ID_TEKNISI = teknisis.get(Integer.valueOf(marker.getTitle())).getIdTeknisi();
+
+                                            }
+                                        });
+
+                                        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        builder.create().show();
+                                    } else {
+                                        marker.showInfoWindow();
+                                    }
+
+
+                                    return true;
+                                }
+
+
+                            });
+                        }
+
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Maaf, tidak ada teknisi didekat anda.\nTutup dan bukka lagi halaman ini.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseFindTeknisi> call, Throwable t) {
+
+            }
+        });
     }
 
 
